@@ -41,33 +41,24 @@ The maximum possible groupings of adjacent ones are already shown in the figure.
 /* Program for flipflops and verify its truth table in quartus using Verilog programming. 
 
 ```
-module jkff(j,k,clk,q,qbar);
 
-input j,k,clk;
-
-output reg q,qbar;
-
-initial 
-
-begin
-
-q=1'b0;
-
-q=1'b1;
-
-end
-
-always @(posedge clk)
-
-begin
-
-q<=(j&~q)|(~k&q);
-
-qbar<=~q;
-
-end
-
-endmodule
+module jk_ff (j, k, clk, rst, q);
+  input j,k,clk,rst;
+  output reg q;
+  always @(posedge clk or posedge rst)
+  begin
+    if (rst)
+      q <= 0; // Reset the flip-flop
+    else if (j == 0 && k == 0)
+      q <= q; // No change
+    else if (j == 0 && k == 1)
+      q <= 0; // Reset
+    else if (j == 1 && k == 0)
+      q <= 1; // Set
+    else if (j == 1 && k == 1)
+      q <= ~q; // Toggle
+  end 
+ endmodule
 ```
 ```
 Developed by: P Bhoopesh
@@ -76,10 +67,11 @@ RegisterNumber:24001306
 */
 
 **RTL LOGIC FOR FLIPFLOPS**
-![WhatsApp Image 2024-12-13 at 16 15 49_06f77cf0](https://github.com/user-attachments/assets/7a516ef7-e55e-490a-9217-4dd14fab7f8e)
+![WhatsApp Image 2024-12-29 at 17 28 31_86176420](https://github.com/user-attachments/assets/aa31c090-d9c6-4b84-ba98-aa01eea3ada7)
 
 **TIMING DIGRAMS FOR FLIP FLOPS**
-![WhatsApp Image 2024-12-13 at 16 15 49_f3a2fb2b](https://github.com/user-attachments/assets/5664667a-feb7-4809-aee5-3c87991d33ff)
+![WhatsApp Image 2024-12-29 at 17 28 31_2ee82251](https://github.com/user-attachments/assets/814e3f18-ef9c-4d68-92d2-912ed501555a)
+
 
 **RESULTS**
 Successfully implemented  JK flipflop using verilog and validating their functionality using their functional tables.
